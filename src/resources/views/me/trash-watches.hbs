@@ -1,0 +1,153 @@
+<form class="mt-4" name="container-form" method="POST" action="/MenWatch/handle-form-actions-restore">
+    <div>
+      <a href="/me/stored/watches">Quay lại</a>
+      <h3>My Watch Deleted</h3>
+
+      <div class="mt-4"> 
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+          <label class="form-check-label" for="checkbox-all">
+            Chọn tất cả
+          </label>
+          <select class="form-select-sm" name="action" required>
+            <option value="">--Lựa chọn--</option>
+            <option value="restore">Khôi phục</option>
+          </select>
+        <button id="btn-check-all-submit" class="btn btn-primary btn-sm" disabled="disabled">Áp dụng</button>
+      </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tên Đồng Hồ</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Thời gian tạo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each watches}}
+            <tr>
+              <td>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="deletedWatchIds[]" value="{{this._id}}">
+                </div>
+              </td>
+              <th scope="row">{{sum @index 1}}</th>
+              <td>{{this.name}}</td>
+              <td>{{this.cost}}</td>
+              <td>{{this.createdAt}}</td>
+              <td>
+                <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Khôi phục</a>
+                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-watch-modal" data-id="{{this._id}}">Xóa vĩnh viễn</a>
+              </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td colspan="5" class="text-center"> 
+                Thùng rác trống
+                <a href="/me/stored/watches">Danh sách sản phẩm</a>
+              </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+{{!-- Confirm Delete Watch --}}
+<div class="modal" id="delete-watch-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa Đồng Hồ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Xóa vĩnh viễn sẽ không thể khôi phục!!! Bạn vẫn muốn tiếp tục?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-watch-modal" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- DELETE hidden form --}}
+<form name="delete-watch-modal-form" method="POST"></form>
+<form name="restore-watch-modal-form" method="POST"></form>
+<script>
+    var id; 
+    var DeleteWatch = document.getElementById('delete-watch-modal');
+    var btnDeleteWatch = document.getElementById('btn-delete-watch-modal');
+    var deleteForm = document.forms['delete-watch-modal-form'];
+    var restoreForm = document.forms["restore-watch-modal-form"];
+    var containerForm = document.forms['container-form'];
+    var btnsRestore = document.querySelectorAll('.btn-restore');  
+    var checkboxAll = document.getElementById('checkbox-all');
+    var watchItemCheckbox = document.getElementsByName('deletedWatchIds[]');
+    var checkAllSubmitBtn = document.getElementById('btn-check-all-submit');
+
+    DeleteWatch.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        id = button.getAttribute('data-id');
+    });
+    
+    btnDeleteWatch.onclick = function(){
+        deleteForm.action = '/MenWatch/'+ id + '/force?_method=DELETE';
+        deleteForm.submit();
+    }   
+
+    btnsRestore.forEach((restoreBnt) => {
+      restoreBnt.addEventListener('click', (event) => {
+        event.preventDefault();
+        var ID = restoreBnt.getAttribute('data-id');
+
+        restoreForm.action = '/MenWatch/'+ ID + '/restore?_method=PATCH';
+        restoreForm.submit();
+      })
+    })
+    // checkboxAll change
+    checkboxAll.addEventListener('click', function() {
+      var isCheckedAll = this.checked;
+      for(var element of watchItemCheckbox){
+        element.checked = isCheckedAll;
+      }
+      renderCheckAllSubmitBtn();
+    });
+    for(var element of watchItemCheckbox){
+      element.addEventListener('click', function() {
+        renderCheckAllSubmitBtn();
+        for(var element of watchItemCheckbox){
+          if(!element.checked){
+            checkboxAll.checked = false;
+            return;
+          }
+        }
+        checkboxAll.checked = true;
+      });
+    }
+    // Re-render check all submit button
+    function renderCheckAllSubmitBtn(){
+      var checkedCount = 0;
+      for(var element of watchItemCheckbox){
+        if(element.checked){
+          checkedCount++;
+        }
+      }
+      if(checkedCount > 0){
+        checkAllSubmitBtn.removeAttribute('disabled', false);
+      }
+      else checkAllSubmitBtn.setAttribute('disabled', true);
+    }
+    // 
+    checkAllSubmitBtn.click(function(event) {
+      event.preventDefaut();
+      var isSubmitable = !this.classList.contains('disabled');
+      if (isSubmitable) {
+      containerForm.submit();
+      }
+    });
+</script>

@@ -1,55 +1,55 @@
 <div class="mt-4">
-    <h3>Đăng Mẫu Đồng Hồ Mới</h3>
-    <form method="POST" action="/MenWatch/store">
+    <h3>Cập Nhật Mẫu Đồng Hồ</h3>
+    <form class="mt-4" method="POST" action="/MenWatch/{{watches._id}}?_method=PUT">
         <div class="mb-3">
             <label for="name" class="form-label">Tên Đồng Hồ</label>
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control" value="{{watches.name}}" name="name">
         </div>
         <div class="mb-3">
             <label for="cost" class="form-label">Giá</label>
-            <input type="text" class="form-control" name="cost">
+            <input type="text" class="form-control" value="{{watches.cost}}"  name="cost">
         </div>
         <div class="mb-3">
             <label for="typeMachine" class="form-label">Loại máy</label>
-            <input type="text" class="form-control" name="typeMachine">
+            <input type="text" class="form-control" value="{{watches.typeMachine}}"  name="typeMachine">
         </div>
         <div class="mb-3">
             <label for="thinness" class="form-label">Độ mỏng mặt</label>
-            <input type="text" class="form-control" name="thinness">
+            <input type="text" class="form-control" value="{{watches.thinness}}"  name="thinness">
         </div>
         <div class="mb-3">
             <label for="material" class="form-label">Chất liệu</label>
-            <input type="text" class="form-control" name="material">
+            <input type="text" class="form-control" value="{{watches.material}}"  name="material">
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Ảnh</label>
-            <input type="text" class="form-control" name="image">
+            <input type="text" class="form-control" value="{{watches.image}}"  name="image">
         </div>
         <div class="mb-3">
             <label for="userObject" class="form-label">Đối tượng sử dụng</label>
-            <input type="text" class="form-control" name="userObject">
+            <input type="text" class="form-control" value="{{watches.userObject}}"  name="userObject">
         </div>
         <div class="mb-3">
             <label for="diameter" class="form-label">Đường kính mặt</label>
-            <input type="text" class="form-control" name="diameter">
+            <input type="text" class="form-control" value="{{watches.diameter}}"  name="diameter">
         </div>
         <div class="mb-3">
             <label for="strapMaterial" class="form-label">Chất liệu dây đeo</label>
-            <input type="text" class="form-control" name="strapMaterial">
+            <input type="text" class="form-control" value="{{watches.strapMaterial}}"  name="strapMaterial">
         </div>
         <div class="mb-3">
             <label for="waterResist" class="form-label">Chống thấm nước</label>
-            <input type="text" class="form-control" name="waterResist">
+            <input type="text" class="form-control" value="{{watches.waterResist}}"  name="waterResist">
         </div>
         <div class="mb-3">
             <label for="brand" class="form-label">Thương hiệu</label>
-            <input type="text" class="form-control" name="brand">
+            <input type="text" class="form-control" value="{{watches.brand}}"  name="brand">
         </div>
         <div class="mb-3">
             <label for="company" class="form-label">Hãng</label>
-            <input type="text" class="form-control" name="company">
+            <input type="text" class="form-control" value="{{watches.company}}"  name="company">
         </div>
         
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Lưu lại</button>
     </form>
 </div>

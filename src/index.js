@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const { engine } = require('express-handlebars');
+const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 
@@ -18,6 +19,9 @@ app.use(
         extended: true,
     }),
 );
+// Chuyển đổi từ phương thức POST SANG PUT hoặc DELETE
+app.use(methodOverride('_method'));
+
 app.use(express.json());
 // http logger (tiêu chuẩn)
 app.use(morgan('combined'));
@@ -26,6 +30,9 @@ app.engine(
     'hbs',
     engine({
         extname: '.hbs',
+        helpers: {
+            sum: (a, b) => a + b,
+        },
     }),
 );
 

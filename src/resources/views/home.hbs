@@ -1,19 +1,19 @@
-<div class="mt-4">
-  <div class="row">
-    {{#each smartwatches}}
-    <div class="col-sm-6 col-lg-2">
-      <div class="card">
-        <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}"/>
-        <div class="card-body">
-          <h5 class="card-title">{{this.name}}</h5>
-          <h5 class="card-text" style="color: red;">{{this.cost}}</h5>
-            <p class="card-text">Loại máy: {{this.typeMachine}}</p>
-          <p class="card-text">Độ mỏng mặt: {{this.thinness}}</p>
-          <p class="card-text">Chất liệu mặt kính: {{this.material}}</p>
-          <a href="/MenWatch/{{this.slug}}" class="btn btn-primary">Chi Tiết</a>
-        </div>
-      </div>
+<div class='mt-4'>
+    <div class='row'>
+        {{#each smartwatches}}
+            <div class='col-sm-6 col-lg-2'>
+                <div class='card'>
+                    <img src='{{this.image}}' class='card-img-top' alt='{{this.name}}'/>
+                    <div class='card-body'>
+                        <h5 class='card-title'>{{this.name}}</h5>
+                        <h5 class='card-text' style='color: red;'>{{this.cost}}</h5>
+                        <p class='card-text'>Loại máy: {{this.typeMachine}}</p>
+                        <p class='card-text'>Độ mỏng mặt: {{this.thinness}}</p>
+                        <p class='card-text'>Chất liệu mặt kính: {{this.material}}</p>
+                        <a href='/MenWatch/{{this.slug}}' class='btn btn-primary'>Chi Tiết</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
     </div>
-    {{/each}}
-  </div>
 </div>

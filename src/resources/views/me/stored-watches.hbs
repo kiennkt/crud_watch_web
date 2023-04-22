@@ -1,0 +1,145 @@
+<form class="mt-4" name="container-form" method="POST" action="/MenWatch/handle-form-actions">
+    <div>
+      <h3>My Watch</h3>
+      <a href="/me/trash/watches">Thùng rác</a>
+
+      <div class="mt-4"> 
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+          <label class="form-check-label" for="checkbox-all">
+            Chọn tất cả
+          </label>
+        </div>
+        <select class="form-select-sm" name="action" required>
+          <option value="">--Lựa chọn--</option>
+          <option value="delete">Xóa</option>
+        </select>
+        <button id="btn-check-all-submit" class="btn btn-primary btn-sm" disabled="disabled">Áp dụng</button>
+      </div>
+    </div>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tên Đồng Hồ</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Thời gian tạo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each watches}}
+            <tr>
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="WatchIds[]" value="{{this._id}}">
+                  </div>
+                </td>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>{{this.cost}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/MenWatch/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                    <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-watch-modal" data-id="{{this._id}}">Xóa</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td colspan="5" class="text-center"> 
+                Bạn chưa đăng sản phẩm nào.
+                <a href="/MenWatch/create">Đăng sản phẩm</a>
+              </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+{{!-- Confirm Delete Watch --}}
+<div class="modal" id="delete-watch-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa Đồng Hồ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure???</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-watch-modal" type="button" class="btn btn-danger">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<form name="delete-watch-modal-form" method="POST"></form>
+<script>
+    var id; 
+    var DeleteWatch = document.getElementById('delete-watch-modal');
+    var btnDeleteWatch = document.getElementById('btn-delete-watch-modal');
+    var deleteForm = document.forms['delete-watch-modal-form'];
+    var containerForm = document.forms['container-form'];
+    var checkboxAll = document.getElementById('checkbox-all');
+    var watchItemCheckbox = document.getElementsByName('WatchIds[]');
+    var checkAllSubmitBtn = document.getElementById('btn-check-all-submit');
+
+    DeleteWatch.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        id = button.getAttribute('data-id');
+    });
+    btnDeleteWatch.onclick = function(){
+        deleteForm.action = '/MenWatch/'+ id + '?_method=DELETE';
+        deleteForm.submit();
+    }
+    // checkboxAll change
+    // checkboxAll.addEventListener('click', function())
+    checkboxAll.onchange = function(){
+      var isCheckedAll = this.checked;
+      for(var Elements of watchItemCheckbox){
+          Elements.checked = isCheckedAll;
+      }
+      renderCheckAllSubmitBtn();
+    }
+    // checkbox item change
+    for(var Elements of watchItemCheckbox){
+      Elements.addEventListener('click', function() {
+        renderCheckAllSubmitBtn();
+        for(var Elements of watchItemCheckbox){
+          if(!Elements.checked) {
+            checkboxAll.checked = false;
+            return;
+          }
+        }
+        checkboxAll.checked = true;
+      });
+    }
+    // Re-render check all submit button
+    function renderCheckAllSubmitBtn(){
+      var checkedCount = 0;
+      for(Elements of watchItemCheckbox){
+        if(Elements.checked){
+          checkedCount++;
+        }
+      }
+      if(checkedCount > 0){
+        checkAllSubmitBtn.removeAttribute('disabled');
+      }
+      else {
+         checkAllSubmitBtn.setAttribute('disabled', true);
+      }
+    }
+
+    checkAllSubmitBtn.click(function(event) {
+      event.preventDefaut();
+      var isSubmitable = !this.classList.contains('disabled');
+      if (isSubmitable) {
+      containerForm.submit();
+      }
+    });
+</script>
