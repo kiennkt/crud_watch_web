@@ -1,6 +1,6 @@
-<form class="mt-4" name="container-form" method="POST" action="/MenWatch/handle-form-actions-restore">
+<form class="mt-4" name="container-form" method="POST" action="/admin/MenWatch/handle-form-actions-restore">
     <div>
-      <a href="/me/stored/watches">Quay lại</a>
+      <a href="/admin/me/stored/watches">Quay lại</a>
       <h3>My Watch Deleted</h3>
 
       <div class="mt-4"> 
@@ -42,14 +42,14 @@
               <td>{{this.createdAt}}</td>
               <td>
                 <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Khôi phục</a>
-                <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-watch-modal" data-id="{{this._id}}">Xóa vĩnh viễn</a>
+                <a href="" class="btn btn-primary mt-1" data-bs-toggle="modal" data-bs-target="#delete-watch-modal" data-id="{{this._id}}">Xóa vĩnh viễn</a>
               </td>
             </tr>
             {{else}}
             <tr>
               <td colspan="5" class="text-center"> 
                 Thùng rác trống
-                <a href="/me/stored/watches">Danh sách sản phẩm</a>
+                <a href="/admin/me/stored/watches">Danh sách sản phẩm</a>
               </td>
             </tr>
             {{/each}}
@@ -96,7 +96,7 @@
     });
     
     btnDeleteWatch.onclick = function(){
-        deleteForm.action = '/MenWatch/'+ id + '/force?_method=DELETE';
+        deleteForm.action = '/admin/MenWatch/'+ id + '/force?_method=DELETE';
         deleteForm.submit();
     }   
 
@@ -105,7 +105,7 @@
         event.preventDefault();
         var ID = restoreBnt.getAttribute('data-id');
 
-        restoreForm.action = '/MenWatch/'+ ID + '/restore?_method=PATCH';
+        restoreForm.action = '/admin/MenWatch/'+ ID + '/restore?_method=PATCH';
         restoreForm.submit();
       })
     })

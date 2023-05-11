@@ -16,5 +16,6 @@ router.patch('/:id/restore', MenWatchController.restore);
 router.delete('/:id', MenWatchController.delete);
 router.delete('/:id/force', MenWatchController.forceDelete);
 router.get('/:slug', MenWatchController.show);
+router.get('/:slug', MenWatchController.show);
 
 module.exports = router;

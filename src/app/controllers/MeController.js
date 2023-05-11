@@ -3,7 +3,8 @@ const Smartwatch = require('../models/Smartwatch');
 class MeController {
     //[GET] me/stored/watches
     storedWatches(req, res, next) {
-        Smartwatch.find({})
+        let watchQuery = Smartwatch.find({});
+        watchQuery
             .lean()
             .then((watches) => res.render('me/stored-watches', { watches }))
             .catch(next);

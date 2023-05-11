@@ -19,7 +19,7 @@ class MenWatchController {
         const watch = new MenWatch(req.body);
         watch
             .save()
-            .then(() => res.redirect('/me/stored/watches'))
+            .then(() => res.redirect('/admin/me/stored/watches'))
             .catch(next);
     }
     // [GET] MenWatch/:id/edit
@@ -32,7 +32,7 @@ class MenWatchController {
     // [PUT] MenWatch/:id
     update(req, res, next) {
         MenWatch.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.redirect('/me/stored/watches'))
+            .then(() => res.redirect('/admin/me/stored/watches'))
             .catch(next);
     }
     // [DELETE] MenWatch/:id

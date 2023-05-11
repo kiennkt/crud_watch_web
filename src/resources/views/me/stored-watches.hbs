@@ -1,7 +1,7 @@
-<form class="mt-4" name="container-form" method="POST" action="/MenWatch/handle-form-actions">
+<form class="mt-4" name="container-form" method="POST" action="/admin/MenWatch/handle-form-actions">
     <div>
       <h3>My Watch</h3>
-      <a href="/me/trash/watches">Thùng rác</a>
+      <a href="/admin/me/trash/watches">Thùng rác</a>
 
       <div class="mt-4"> 
         <div class="form-check">
@@ -42,7 +42,7 @@
                 <td>{{this.cost}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>
-                    <a href="/MenWatch/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
+                    <a href="/admin/MenWatch/{{this._id}}/edit" class="btn btn-primary">Sửa</a>
                     <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete-watch-modal" data-id="{{this._id}}">Xóa</a>
                 </td>
             </tr>
@@ -50,7 +50,7 @@
             <tr>
               <td colspan="5" class="text-center"> 
                 Bạn chưa đăng sản phẩm nào.
-                <a href="/MenWatch/create">Đăng sản phẩm</a>
+                <a href="/admin/MenWatch/create">Đăng sản phẩm</a>
               </td>
             </tr>
             {{/each}}
@@ -94,7 +94,7 @@
         id = button.getAttribute('data-id');
     });
     btnDeleteWatch.onclick = function(){
-        deleteForm.action = '/MenWatch/'+ id + '?_method=DELETE';
+        deleteForm.action = '/admin/MenWatch/'+ id + '?_method=DELETE';
         deleteForm.submit();
     }
     // checkboxAll change
