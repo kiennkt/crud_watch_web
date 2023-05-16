@@ -1,8 +1,8 @@
-const newsRouter = require('./news');
-const loginRouter = require('./login');
-const MenWatchRouter = require('./MenWatch');
-const meRouter = require('./me');
-const homeRouter = require('./home');
+const newsRouter = require('./Admin/news');
+const loginRouter = require('./Admin/login');
+const MenWatchRouter = require('./Admin/MenWatch');
+const meRouter = require('./Admin/me');
+const homeRouter = require('./Admin/home');
 const homeUserRouter = require('./User/home');
 var cookieParser = require('cookie-parser');
 

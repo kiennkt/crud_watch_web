@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 
-const route = require('./routes');
+const route = require('./routes/route');
 const db = require('./config/db');
 
 // connect db
@@ -38,7 +38,10 @@ app.engine(
 
 app.set('view engine', 'hbs');
 
-app.set('views', path.join(__dirname, 'resources', 'views'));
+app.set('views', [
+    path.join(__dirname, 'resources', 'views', 'Admin'),
+    path.join(__dirname, 'resources', 'views', 'User'),
+]);
 
 // Routes init: Khởi tạo tuyến đường
 route(app);
